@@ -1,5 +1,12 @@
 import { useNavigation } from "@react-navigation/core";
-import { Button, Text, TextInput, View, TouchableOpacity } from "react-native";
+import {
+  Button,
+  Text,
+  TextInput,
+  View,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export default function SignInScreen({
@@ -23,6 +30,7 @@ export default function SignInScreen({
           {/* {console.log(userName)} */}
           <Text>Password: </Text>
           <TextInput
+            style={styles.redBox}
             placeholder="Password"
             secureTextEntry={true}
             onChangeText={(newPassword) => setPassword(newPassword)}
@@ -31,11 +39,14 @@ export default function SignInScreen({
           <Button
             title="Sign in"
             onPress={async () => {
+              if (!password && !userName) {
+                alert("please enter a username and a password");
+              }
+
               if (!userName) {
                 alert("please enter a name");
               }
               if (!password) {
-                console.log(password);
                 alert("please enter a password");
               }
 
@@ -58,3 +69,8 @@ export default function SignInScreen({
     </KeyboardAwareScrollView>
   );
 }
+const styles = StyleSheet.create({
+  redBox: {
+backgroundColor: "red",
+  },
+])
