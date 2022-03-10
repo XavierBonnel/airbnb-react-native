@@ -17,7 +17,7 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [userToken, setUserToken] = useState(null);
-  const [userName, setUserName] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const setToken = async (token) => {
@@ -61,8 +61,8 @@ export default function App() {
               {() => (
                 <SignInScreen
                   setToken={setToken}
-                  userName={userName}
-                  setUserName={setUserName}
+                  username={username}
+                  setUsername={setUsername}
                   password={password}
                   setPassword={setPassword}
                 />
