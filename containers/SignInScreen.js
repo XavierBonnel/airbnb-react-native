@@ -13,8 +13,8 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 
 export default function SignInScreen({
   setToken,
-  username,
-  setUsername,
+  email,
+  setEmail,
   setPassword,
   password,
 }) {
@@ -27,7 +27,7 @@ export default function SignInScreen({
     {
       setErrorMessage("");
 
-      if (password && username) {
+      if (password && email) {
         // const userToken = "secret-token";
         // setToken(userToken);
         console.log("it's working");
@@ -41,16 +41,16 @@ export default function SignInScreen({
     <KeyboardAwareScrollView contentContainerStyle={styles.scrollViewContainer}>
       <View style={styles.signInContainer}>
         <Image source={require("../assets/logo.png")} style={styles.logo} />
-        <Text style={styles.h3}>Name: </Text>
+        <Text style={styles.h3}>Email: </Text>
         <TextInput
           style={errorMessage ? styles.redBox : styles.grayBox}
-          placeholder="Jane Doe"
-          onChangeText={(newUsername) => setUsername(newUsername)}
-          value={username}
+          placeholder="Jane.doe@email.com"
+          onChangeText={(newEmail) => setEmail(newEmail)}
+          value={email}
         />
-        {console.log(username)}
+        {console.log(email)}
 
-        {/* {console.log(username)} */}
+        {/* {console.log(email)} */}
         <Text style={styles.h3}>Password: </Text>
         <TextInput
           style={errorMessage ? styles.redBox : styles.grayBox}
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
   },
   redBox: {
     textAlign: "center",
-    width: 100,
+    width: 150,
     height: 40,
     borderBottomWidth: 1,
     borderBottomColor: "#FF385C",
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
 
   grayBox: {
     textAlign: "center",
-    width: 100,
+    width: 150,
     height: 40,
     borderBottomWidth: 1,
     borderBottomColor: "gray",
@@ -110,6 +110,8 @@ const styles = StyleSheet.create({
 
   error: {
     marginTop: 18,
+    color: "#FF385C",
+    fontSize: 16,
   },
 
   logo: {
