@@ -8,12 +8,15 @@ import {
   TouchableOpacity,
   StyleSheet,
   Image,
+  ActivityIndicator,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import axios from "axios";
 
-export default function SignInScreen({ userToken, setUserToken }) {
+export default function SignInScreen({ userToken, setUserToken, setToken }) {
   const navigation = useNavigation();
+  const [isLoading, setIsLoading] = useState(false);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -21,7 +24,7 @@ export default function SignInScreen({ userToken, setUserToken }) {
   const handleSubmit = async () => {
     {
       setErrorMessage("");
-
+      setIsLoading(true);
       if (password && email) {
         try {
           const response = await axios.post(
@@ -31,10 +34,10 @@ export default function SignInScreen({ userToken, setUserToken }) {
               password,
             }
           );
-          console.log(response.data);
-          setUserToken(response.data.token);
-          console.log(userToken);
+          setIsLoading(false);
+          console.log(response.data.token);
           alert("you're connected");
+          setToken(response.data.token);
         } catch (error) {
           console.log(error.message);
           setErrorMessage(error.message);
@@ -74,9 +77,13 @@ export default function SignInScreen({ userToken, setUserToken }) {
             <Text style={styles.error}>{errorMessage}</Text>
           ) : null}
 
-          <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-            <Text style={styles.buttonText}> Sign in</Text>
-          </TouchableOpacity>
+          {isLoading === true ? (
+            <ActivityIndicator size="large" color="#FF385C" />
+          ) : (
+            <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+              <Text style={styles.buttonText}> Sign in</Text>
+            </TouchableOpacity>
+          )}
 
           <TouchableOpacity
             style={{ width: 150, height: 30 }}
