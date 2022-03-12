@@ -41,43 +41,48 @@ export default function SignInScreen({
     <KeyboardAwareScrollView contentContainerStyle={styles.scrollViewContainer}>
       <View style={styles.signInContainer}>
         <Image source={require("../assets/logo.png")} style={styles.logo} />
-        <Text style={styles.h3}>Email: </Text>
+       <View>
         <TextInput
           style={errorMessage ? styles.redBox : styles.grayBox}
-          placeholder="Jane.doe@email.com"
+          placeholder="Email"
           onChangeText={(newEmail) => setEmail(newEmail)}
           value={email}
         />
         {console.log(email)}
 
-        {/* {console.log(email)} */}
-        <Text style={styles.h3}>Password: </Text>
         <TextInput
           style={errorMessage ? styles.redBox : styles.grayBox}
-          placeholder="42"
+          placeholder="Password"
           secureTextEntry={true}
           onChangeText={(newPassword) => setPassword(newPassword)}
           value={password}
         />
+        </View>
+
+        <View>
         {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}
 
         <TouchableOpacity style={styles.button} onPress={handleSubmit}>
           <Text style={styles.buttonText}> Sign in</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity
+        <TouchableOpacity style={{width:150, height:30}}
           onPress={() => {
             navigation.navigate("SignUp");
           }}
         >
-          <Text>Create an account</Text>
+          <Text style={{ color:"gray", textAlign:"center" }} >Create an account</Text>
         </TouchableOpacity>
+        </View>
       </View>
     </KeyboardAwareScrollView>
   );
 }
+
+
 const styles = StyleSheet.create({
   scrollViewContainer: {
+    flex:1,
     alignItems: "center",
     justifyContent: "space-evenly",
   },
@@ -85,10 +90,13 @@ const styles = StyleSheet.create({
   signInContainer: {
     flex: 1,
     alignItems: "center",
+    justifyContent: "space-evenly",
+
   },
   redBox: {
-    textAlign: "center",
-    width: 150,
+    // textAlign: "center",
+    marginTop:16,
+    width: 180,
     height: 40,
     borderBottomWidth: 1,
     borderBottomColor: "#FF385C",
@@ -96,8 +104,9 @@ const styles = StyleSheet.create({
   },
 
   grayBox: {
-    textAlign: "center",
-    width: 150,
+    // textAlign: "center",
+    marginTop:16,
+    width: 180,
     height: 40,
     borderBottomWidth: 1,
     borderBottomColor: "gray",
@@ -120,17 +129,17 @@ const styles = StyleSheet.create({
     marginVertical: 16,
   },
   button: {
-    flex: 1,
     justifyContent: "center",
     alignItems: "center",
     width: 150,
     height: 40,
-    borderRadius: 10,
-    backgroundColor: "#FF385C",
+    borderRadius: 50,
+    borderWidth:2,
+    borderColor: "#FF385C",
     marginVertical: 20,
   },
   buttonText: {
-    color: "white",
-    fontSize: 20,
+    color: "black",
+    fontSize: 16,
   },
 });
