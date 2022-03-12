@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Image,
   SafeAreaView,
+  ActivityIndicator,
 } from "react-native";
 import { useNavigation } from "@react-navigation/core";
 import { useState } from "react";
@@ -15,6 +16,7 @@ import axios from "axios";
 
 export default function SignInScreen({ setToken }) {
   const navigation = useNavigation();
+  const [isLoading, setIsLoading] = useState(false);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -27,6 +29,7 @@ export default function SignInScreen({ setToken }) {
   const handleSubmit = async () => {
     {
       setErrorMessage("");
+      setIsLoading(true);
 
       if (password && confirmPassword && email && username && description) {
         if (password === confirmPassword) {
@@ -40,8 +43,12 @@ export default function SignInScreen({ setToken }) {
                 password,
               }
             );
+
+            setIsLoading(false);
+
             console.log(response.data);
             alert("account created");
+            setToken(response.data.token);
           } catch (error) {
             console.log(error.message);
             console.log(error.response.data);
@@ -109,10 +116,13 @@ export default function SignInScreen({ setToken }) {
           {errorMessage ? (
             <Text style={styles.error}>{errorMessage}</Text>
           ) : null}
-
-          <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-            <Text style={styles.buttonText}> Sign up</Text>
-          </TouchableOpacity>
+          {isLoading === true ? (
+            <ActivityIndicator size="large" color="#FF385C" />
+          ) : (
+            <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+              <Text style={styles.buttonText}> Sign up</Text>
+            </TouchableOpacity>
+          )}
 
           <TouchableOpacity
             style={{ width: 150, height: 30 }}
