@@ -10,24 +10,35 @@ import {
   Image,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import axios from "axios";
 
-export default function SignInScreen({
-  setToken,
-  email,
-  setEmail,
-  setPassword,
-  password,
-}) {
+export default function SignInScreen({ userToken, setUserToken }) {
   const navigation = useNavigation();
-
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [inputStyle, setInputStyle] = useState("");
 
   const handleSubmit = async () => {
     {
       setErrorMessage("");
 
       if (password && email) {
+        try {
+          const response = await axios.post(
+            " https://express-airbnb-api.herokuapp.com/user/log_in",
+            {
+              email,
+              password,
+            }
+          );
+          console.log(response.data);
+          setUserToken(response.data.token);
+          console.log(userToken);
+          alert("you're connected");
+        } catch (error) {
+          console.log(error.message);
+          setErrorMessage(error.message);
+        }
         // const userToken = "secret-token";
         // setToken(userToken);
         console.log("it's working");
@@ -41,48 +52,51 @@ export default function SignInScreen({
     <KeyboardAwareScrollView contentContainerStyle={styles.scrollViewContainer}>
       <View style={styles.signInContainer}>
         <Image source={require("../assets/logo.png")} style={styles.logo} />
-       <View>
-        <TextInput
-          style={errorMessage ? styles.redBox : styles.grayBox}
-          placeholder="Email"
-          onChangeText={(newEmail) => setEmail(newEmail)}
-          value={email}
-        />
-        {console.log(email)}
+        <View>
+          <TextInput
+            style={errorMessage ? styles.redBox : styles.grayBox}
+            placeholder="Email"
+            onChangeText={(newEmail) => setEmail(newEmail)}
+            value={email}
+          />
 
-        <TextInput
-          style={errorMessage ? styles.redBox : styles.grayBox}
-          placeholder="Password"
-          secureTextEntry={true}
-          onChangeText={(newPassword) => setPassword(newPassword)}
-          value={password}
-        />
+          <TextInput
+            style={errorMessage ? styles.redBox : styles.grayBox}
+            placeholder="Password"
+            secureTextEntry={true}
+            onChangeText={(newPassword) => setPassword(newPassword)}
+            value={password}
+          />
         </View>
 
         <View>
-        {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}
+          {errorMessage ? (
+            <Text style={styles.error}>{errorMessage}</Text>
+          ) : null}
 
-        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-          <Text style={styles.buttonText}> Sign in</Text>
-        </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+            <Text style={styles.buttonText}> Sign in</Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity style={{width:150, height:30}}
-          onPress={() => {
-            navigation.navigate("SignUp");
-          }}
-        >
-          <Text style={{ color:"gray", textAlign:"center" }} >Create an account</Text>
-        </TouchableOpacity>
+          <TouchableOpacity
+            style={{ width: 150, height: 30 }}
+            onPress={() => {
+              navigation.navigate("SignUp");
+            }}
+          >
+            <Text style={{ color: "gray", textAlign: "center" }}>
+              Create an account
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
     </KeyboardAwareScrollView>
   );
 }
 
-
 const styles = StyleSheet.create({
   scrollViewContainer: {
-    flex:1,
+    flex: 1,
     alignItems: "center",
     justifyContent: "space-evenly",
   },
@@ -91,11 +105,10 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "space-evenly",
-
   },
   redBox: {
     // textAlign: "center",
-    marginTop:16,
+    marginTop: 16,
     width: 180,
     height: 40,
     borderBottomWidth: 1,
@@ -105,7 +118,7 @@ const styles = StyleSheet.create({
 
   grayBox: {
     // textAlign: "center",
-    marginTop:16,
+    marginTop: 16,
     width: 180,
     height: 40,
     borderBottomWidth: 1,
@@ -134,7 +147,7 @@ const styles = StyleSheet.create({
     width: 150,
     height: 40,
     borderRadius: 50,
-    borderWidth:2,
+    borderWidth: 2,
     borderColor: "#FF385C",
     marginVertical: 20,
   },

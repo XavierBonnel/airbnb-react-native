@@ -6,33 +6,48 @@ import {
   TouchableOpacity,
   StyleSheet,
   Image,
-  SafeAreaView
+  SafeAreaView,
 } from "react-native";
 import { useNavigation } from "@react-navigation/core";
 import { useState } from "react";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import axios from "axios";
 
-export default function SignInScreen({
-  setToken,
-  email,
-  setEmail,
-  setPassword,
-  password,
-  username,
-  setUsername,
-  confirmPassword,
-  setConfirmPassword,
-}) {
+export default function SignInScreen({ setToken }) {
   const navigation = useNavigation();
 
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [description, setDescription] = useState("");
+
   const [errorMessage, setErrorMessage] = useState("");
-  const [inputStyle, setInputStyle] = useState("");
 
   const handleSubmit = async () => {
     {
       setErrorMessage("");
 
-      if (password && email) {
+      if (password && confirmPassword && email && username && description) {
+        if (password === confirmPassword) {
+          try {
+            const response = await axios.post(
+              "https://express-airbnb-api.herokuapp.com/user/sign_up",
+              {
+                email,
+                username,
+                description,
+                password,
+              }
+            );
+            console.log(response.data);
+            alert("account created");
+          } catch (error) {
+            console.log(error.message);
+            console.log(error.response.data);
+            setErrorMessage(error.message);
+          }
+        }
         // const userToken = "secret-token";
         // setToken(userToken);
         console.log("it's working");
@@ -46,66 +61,76 @@ export default function SignInScreen({
     <KeyboardAwareScrollView contentContainerStyle={styles.scrollViewContainer}>
       <View style={styles.signUpContainer}>
         <Image source={require("../assets/logo.png")} style={styles.logo} />
-       <View>
-       <TextInput
-          style={errorMessage ? styles.redBox : styles.grayBox}
-          placeholder="Email"
-          onChangeText={(newEmail) => setEmail(newEmail)}
-          value={email}
-        />
-        <TextInput
-          style={errorMessage ? styles.redBox : styles.grayBox}
-          placeholder="Username"
-          onChangeText={(newUsername) => setUsername(newUsername)}
-          value={username}
-        />
-        {console.log(email)}
+        <View>
+          <TextInput
+            style={errorMessage ? styles.redBox : styles.grayBox}
+            placeholder="Email"
+            onChangeText={(newEmail) => setEmail(newEmail)}
+            value={email}
+          />
+          <TextInput
+            style={errorMessage ? styles.redBox : styles.grayBox}
+            placeholder="Username"
+            onChangeText={(newUsername) => setUsername(newUsername)}
+            value={username}
+          />
+          {console.log(email)}
 
-        <SafeAreaView >
-<TextInput style={styles.description} placeholder="describe yourself" multiline
-        numberOfLines={6} />
-        </SafeAreaView>
+          <View style={styles.descriptionView}>
+            <TextInput
+              placeholder="Describe yourself"
+              multiline={true}
+              style={styles.description}
+              onChangeText={(newDescription) => {
+                setDescription(newDescription);
+              }}
+            />
+          </View>
 
-        <TextInput
-          style={errorMessage ? styles.redBox : styles.grayBox}
-          placeholder="Password"
-          secureTextEntry={true}
-          onChangeText={(newPassword) => setPassword(newPassword)}
-          value={password}
-        />
-         <TextInput
-          style={errorMessage ? styles.redBox : styles.grayBox}
-          placeholder="Confirm password"
-          secureTextEntry={true}
-          onChangeText={(newConfirmPassword) => setConfirmPassword(newConfirmPassword)}
-          value={confirmPassword}
-        />
+          <TextInput
+            style={errorMessage ? styles.redBox : styles.grayBox}
+            placeholder="Password"
+            secureTextEntry={true}
+            onChangeText={(newPassword) => setPassword(newPassword)}
+            value={password}
+          />
+          <TextInput
+            style={errorMessage ? styles.redBox : styles.grayBox}
+            placeholder="Confirm password"
+            secureTextEntry={true}
+            onChangeText={(newConfirmPassword) =>
+              setConfirmPassword(newConfirmPassword)
+            }
+            value={confirmPassword}
+          />
         </View>
 
         <View>
-        {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}
+          {errorMessage ? (
+            <Text style={styles.error}>{errorMessage}</Text>
+          ) : null}
 
-        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-          <Text style={styles.buttonText}> Sign up</Text>
-        </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+            <Text style={styles.buttonText}> Sign up</Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity style={{width:150, height:30}}
-          onPress={() => {
-            navigation.navigate("SignIn");
-          }}
-        >
-          <Text style={{ color:"gray", textAlign:"center" }} >Sign in</Text>
-        </TouchableOpacity>
+          <TouchableOpacity
+            style={{ width: 150, height: 30 }}
+            onPress={() => {
+              navigation.navigate("SignIn");
+            }}
+          >
+            <Text style={{ color: "gray", textAlign: "center" }}>Sign in</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </KeyboardAwareScrollView>
   );
 }
 
-
 const styles = StyleSheet.create({
   scrollViewContainer: {
-    flex:1,
+    flex: 1,
     alignItems: "center",
     justifyContent: "space-evenly",
   },
@@ -115,11 +140,10 @@ const styles = StyleSheet.create({
     width: 500,
     alignItems: "center",
     justifyContent: "space-evenly",
-
   },
   redBox: {
     // textAlign: "center",
-    marginTop:16,
+    marginTop: 16,
     width: 180,
     height: 40,
     borderBottomWidth: 1,
@@ -129,7 +153,7 @@ const styles = StyleSheet.create({
 
   grayBox: {
     // textAlign: "center",
-    marginTop:16,
+    marginTop: 16,
     width: 180,
     height: 40,
     borderBottomWidth: 1,
@@ -141,12 +165,13 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
 
-  descripton:{
-flex:1,
-    borderColor:"gray",
-    borderWidth:1,
-    fontSize:20,
-    
+  description: {
+    paddingLeft: 12,
+    width: 180,
+    height: 100,
+    borderWidth: 1,
+    borderColor: "gray",
+    marginTop: 30,
   },
 
   error: {
@@ -166,7 +191,7 @@ flex:1,
     width: 150,
     height: 40,
     borderRadius: 50,
-    borderWidth:2,
+    borderWidth: 2,
     borderColor: "#FF385C",
     marginVertical: 20,
   },

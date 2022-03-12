@@ -18,10 +18,6 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [userToken, setUserToken] = useState(null);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
 
   const setToken = async (token) => {
     if (token) {
@@ -60,33 +56,14 @@ export default function App() {
         {userToken === null ? (
           // No token found, user isn't signed in
           <>
-            <Stack.Screen name="SignIn"   options={{headerShown: false}}
->
+            <Stack.Screen name="SignIn" options={{ headerShown: false }}>
               {() => (
-                <SignInScreen
-                  setToken={setToken}
-                  email={email}
-                  setEmail={setEmail}
-                  password={password}
-                  setPassword={setPassword}
-                />
+                <SignInScreen setToken={setToken} setUserToken={setUserToken} />
               )}
             </Stack.Screen>
 
-            <Stack.Screen name="SignUp" options={{headerShown: false}} >
-              {() => (
-                <SignUpScreen
-                  setToken={setToken}
-                  email={email}
-                  setEmail={setEmail}
-                  password={password}
-                  setPassword={setPassword}
-                  username={username}
-                  setUsername={setUsername}
-                  confirmPassword={confirmPassword}
-                  setConfirmPassword={setConfirmPassword}
-                />
-              )}
+            <Stack.Screen name="SignUp" options={{ headerShown: false }}>
+              {() => <SignUpScreen setToken={setToken} />}
             </Stack.Screen>
           </>
         ) : (
