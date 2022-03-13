@@ -7,9 +7,13 @@ import {
   FlatList,
   Image,
   ActivityIndicator,
+  StyleSheet,
   TouchableOpacity,
+  SafeAreaView,
 } from "react-native";
 import axios from "axios";
+
+import styles from "../styles/HomeScreen.style";
 
 export default function HomeScreen() {
   const navigation = useNavigation();
@@ -33,57 +37,71 @@ export default function HomeScreen() {
   }, []);
 
   return (
-    <View>
-      <Button
-        title="Go to Profile"
-        onPress={() => {
-          navigation.navigate("Profile", { userId: 123 });
-        }}
-      />
-      {isLoading ? (
-        <ActivityIndicator size="large" color="#FF385C" />
-      ) : (
-        <FlatList
-          data={data}
-          renderItem={(obj) => {
-            return (
-              <View key={obj.index}>
-                <TouchableOpacity
-                  onPress={() => {
-                    navigation.navigate("Room", {
-                      roomId: obj.item._id,
-                    });
-                    console.log(obj.item._id);
-                  }}
-                >
-                  <Image
-                    source={{ uri: obj.item.photos[0].url }}
-                    style={{ width: 310, height: 165 }}
-                  />
-                  <View
-                    style={{
-                      backgroundColor: "black",
-                      width: 80,
-                      height: 40,
-                    }}
-                  >
-                    <Text style={{ color: "white" }}>{obj.item.price}</Text>
-                  </View>
-                  <Text>{obj.item.title}</Text>
-                  <Text>{obj.item.ratingValue} stars</Text>
-                  <Image
-                    style={{ width: 64, height: 64 }}
-                    source={{ uri: obj.item.user.account.photo.url }}
-                  />
-                </TouchableOpacity>
-              </View>
-            );
-          }}
-          keyExtractor={(item) => {
-            return String(item._id);
+    <SafeAreaView style={styles.container}>
+      <View style={{ marginTop: 24 }}>
+        <Button
+          title="Go to Profile"
+          onPress={() => {
+            navigation.navigate("Profile", { userId: 123 });
           }}
         />
-      )}
-    </View>
+        <Image source={require("../assets/logo.png")} style={styles.logo} />
+        {isLoading ? (
+          <ActivityIndicator size="large" color="#FF385C" />
+        ) : (
+          <FlatList
+            data={data}
+            renderItem={(obj) => {
+              return (
+                <View style={styles.roomCard} key={obj.index}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      navigation.navigate("Room", {
+                        roomId: obj.item._id,
+                      });
+                      console.log(obj.item._id);
+                    }}
+                  >
+                    <View style={styles.squarePrice}>
+                      <Text style={{ color: "white" }}>{obj.item.price}</Text>
+                    </View>
+                    <Image
+                      source={{ uri: obj.item.photos[0].url }}
+                      style={styles.photo}
+                    />
+                    <View style={styles.details}>
+                      <View style={styles.titleAndAvatar}>
+                        <View>
+                          <Text
+                            style={styles.title}
+                            numberOfLines={1}
+                            ellipsizeMode={"tail"}
+                          >
+                            {obj.item.title}
+                          </Text>
+                          <Text>{obj.item.ratingValue} stars</Text>
+                          <Text style={styles.reviews}>
+                            {obj.item.reviews} reviews
+                          </Text>
+                        </View>
+                        <Image
+                          style={styles.profilePic}
+                          source={{ uri: obj.item.user.account.photo.url }}
+                        />
+                      </View>
+
+                      <View style={styles.separator} />
+                    </View>
+                  </TouchableOpacity>
+                </View>
+              );
+            }}
+            keyExtractor={(item) => {
+              return String(item._id);
+            }}
+          />
+        )}
+      </View>
+    </SafeAreaView>
   );
 }

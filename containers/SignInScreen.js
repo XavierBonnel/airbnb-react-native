@@ -21,6 +21,14 @@ export default function SignInScreen({ userToken, setUserToken, setToken }) {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
+  const loadingNoInputs = () => {
+    if (isLoading === true && !errorMessage) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   const handleSubmit = async () => {
     {
       setErrorMessage("");
@@ -42,8 +50,7 @@ export default function SignInScreen({ userToken, setUserToken, setToken }) {
           console.log(error.message);
           setErrorMessage(error.message);
         }
-        // const userToken = "secret-token";
-        // setToken(userToken);
+
         console.log("it's working");
       } else {
         setErrorMessage("please fill all the inputs");
@@ -77,7 +84,7 @@ export default function SignInScreen({ userToken, setUserToken, setToken }) {
             <Text style={styles.error}>{errorMessage}</Text>
           ) : null}
 
-          {isLoading === true ? (
+          {loadingNoInputs() === true ? (
             <ActivityIndicator size="large" color="#FF385C" />
           ) : (
             <TouchableOpacity style={styles.button} onPress={handleSubmit}>
@@ -144,7 +151,7 @@ const styles = StyleSheet.create({
   },
 
   logo: {
-    height: 120,
+    height: 130,
     width: 120,
     marginVertical: 16,
   },
