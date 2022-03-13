@@ -48,7 +48,14 @@ export default function HomeScreen() {
           renderItem={(obj) => {
             return (
               <View key={obj.index}>
-                <TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    navigation.navigate("Room", {
+                      roomId: obj.item._id,
+                    });
+                    console.log(obj.item._id);
+                  }}
+                >
                   <Image
                     source={{ uri: obj.item.photos[0].url }}
                     style={{ width: 310, height: 165 }}
