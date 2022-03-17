@@ -39,12 +39,12 @@ export default function HomeScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={{ marginTop: 24 }}>
-        <Button
+      {/* <Button
           title="Go to Profile"
           onPress={() => {
             navigation.navigate("Profile", { userId: 123 });
           }}
-        />
+        /> */}
         <Image source={require("../assets/logo.png")} style={styles.logo} />
         {isLoading ? (
           <ActivityIndicator size="large" color="#FF385C" />

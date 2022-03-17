@@ -26,6 +26,14 @@ export default function SignInScreen({ setToken }) {
 
   const [errorMessage, setErrorMessage] = useState("");
 
+  const loadingNoInputs = () => {
+    if (isLoading === true && !errorMessage) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   const handleSubmit = async () => {
     {
       setErrorMessage("");
@@ -116,7 +124,7 @@ export default function SignInScreen({ setToken }) {
           {errorMessage ? (
             <Text style={styles.error}>{errorMessage}</Text>
           ) : null}
-          {isLoading === true ? (
+          {loadingNoInputs() === true ? (
             <ActivityIndicator size="large" color="#FF385C" />
           ) : (
             <TouchableOpacity style={styles.button} onPress={handleSubmit}>

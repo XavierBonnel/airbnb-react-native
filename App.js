@@ -125,13 +125,42 @@ export default function App() {
                     </Stack.Navigator>
                   )}
                 </Tab.Screen>
+       
+                {/* <Tab.Screen
+                  name="TabMap"
+                  options={{
+                    tabBarLabel: "Map",
+                    tabBarIcon: ({ color, size }) => (
+                      <Ionicons
+                        name={"location-outline"}
+                        size={size}
+                        color={color}
+                      />
+                    ),
+                  }}
+                >
+                  {() => (
+                    <Stack.Navigator>
+                      <Stack.Screen
+                        name="Map"
+                        options={{
+                          title: "Map",
+                        }}
+                      >
+                        {() => <MapScreen setToken={setToken} />}
+                      </Stack.Screen>
+                    </Stack.Navigator>
+                  )}
+                </Tab.Screen> */}
+       
+       
                 <Tab.Screen
                   name="TabSettings"
                   options={{
                     tabBarLabel: "Settings",
                     tabBarIcon: ({ color, size }) => (
                       <Ionicons
-                        name={"ios-options"}
+                        name={"options-outline"}
                         size={size}
                         color={color}
                       />
@@ -151,6 +180,16 @@ export default function App() {
                     </Stack.Navigator>
                   )}
                 </Tab.Screen>
+
+                
+
+                {/* <Button
+          title="Go to Profile"
+          onPress={() => {
+            navigation.navigate("Profile", { userId: 123 });
+          }}
+        /> */}
+
               </Tab.Navigator>
             )}
           </Stack.Screen>

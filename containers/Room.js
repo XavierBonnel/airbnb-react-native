@@ -8,8 +8,11 @@ import {
   Image,
   ActivityIndicator,
   TouchableOpacity,
+  StyleSheet,
 } from "react-native";
 import axios from "axios";
+
+import styles from "../styles/Room.style";
 
 export default function Room({ route, navigation }) {
   const [data, setData] = useState("");
@@ -42,7 +45,7 @@ export default function Room({ route, navigation }) {
         <View>
           <Image
             source={{ uri: data.photos[0].url }}
-            style={{ width: 310, height: 165 }}
+            style={styles.photo}
           />
           <View
             style={{
