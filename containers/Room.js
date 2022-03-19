@@ -74,10 +74,10 @@ export default function Room({ route, navigation }) {
             // La MapView doit obligatoirement avoir des dimensions
             style={{ width: "100%", height: 150 }}
             initialRegion={{
-              latitude: 48.856614,
-              longitude: 2.3522219,
-              latitudeDelta: 0.2,
-              longitudeDelta: 0.2,
+              latitude: data.location[1],
+              longitude: data.location[0],
+              latitudeDelta: 0.07,
+              longitudeDelta: 0.07,
             }}
             showsUserLocation={true}
           >
@@ -89,8 +89,8 @@ export default function Room({ route, navigation }) {
                     latitude: data.location[1],
                     longitude: data.location[0],
                   }}
-                  title={marker.title}
-                  description={marker.description}
+                  title={data.title}
+                  description={data.description}
                 />
               );
             })}

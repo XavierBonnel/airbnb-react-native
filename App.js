@@ -12,6 +12,7 @@ import SignUpScreen from "./containers/SignUpScreen";
 import SettingsScreen from "./containers/SettingsScreen";
 import SplashScreen from "./containers/SplashScreen";
 import Room from "./containers/Room";
+import AroundmeScreen from "./containers/AroundmeScreen";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -125,8 +126,8 @@ export default function App() {
                     </Stack.Navigator>
                   )}
                 </Tab.Screen>
-       
-                {/* <Tab.Screen
+
+                <Tab.Screen
                   name="TabMap"
                   options={{
                     tabBarLabel: "Map",
@@ -142,18 +143,17 @@ export default function App() {
                   {() => (
                     <Stack.Navigator>
                       <Stack.Screen
-                        name="Map"
+                        name="Around me"
                         options={{
-                          title: "Map",
+                          title: "Around me",
                         }}
                       >
-                        {() => <MapScreen setToken={setToken} />}
+                        {() => <AroundmeScreen setToken={setToken} />}
                       </Stack.Screen>
                     </Stack.Navigator>
                   )}
-                </Tab.Screen> */}
-       
-       
+                </Tab.Screen>
+
                 <Tab.Screen
                   name="TabSettings"
                   options={{
@@ -181,15 +181,12 @@ export default function App() {
                   )}
                 </Tab.Screen>
 
-                
-
                 {/* <Button
           title="Go to Profile"
           onPress={() => {
             navigation.navigate("Profile", { userId: 123 });
           }}
         /> */}
-
               </Tab.Navigator>
             )}
           </Stack.Screen>
