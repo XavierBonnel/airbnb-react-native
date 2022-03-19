@@ -1,4 +1,6 @@
 import { useNavigation } from "@react-navigation/core";
+import MapView from "react-native-maps";
+
 import { useEffect, useState } from "react";
 import {
   Button,
@@ -9,6 +11,7 @@ import {
   ActivityIndicator,
   TouchableOpacity,
   StyleSheet,
+  ScrollView,
 } from "react-native";
 import axios from "axios";
 
@@ -26,6 +29,7 @@ export default function Room({ route, navigation }) {
         const response = await axios.get(
           `https://express-airbnb-api.herokuapp.com/rooms/${roomId}`
         );
+
         setData(response.data);
         console.log(response.data);
         setIsLoading(false);
@@ -37,33 +41,61 @@ export default function Room({ route, navigation }) {
     fetchdata();
   }, []);
 
+  const markers = [
+    {
+      id: 1,
+      // latitude: data.location[1],
+      // longitude: data.location[0],
+      title: "Le Reacteur",
+      description: "La formation des champion·ne·s !",
+    },
+  ];
+
   return (
     <View>
       {isLoading ? (
         <ActivityIndicator size="large" color="#FF385C" />
       ) : (
-        <View>
-          <Image
-            source={{ uri: data.photos[0].url }}
-            style={styles.photo}
-          />
-          <View
-            style={{
-              backgroundColor: "black",
-              width: 80,
-              height: 40,
-            }}
-          >
+        <ScrollView>
+          <Image source={{ uri: data.photos[0].url }} style={styles.photo} />
+          <View style={styles.squarePrice}>
             <Text style={{ color: "white" }}>{data.price}</Text>
           </View>
-          <Text>{data.title}</Text>
+          <Text style={styles.title}>{data.title}</Text>
           <Text>{data.ratingValue} stars</Text>
           <Image
-            style={{ width: 64, height: 64 }}
+            style={styles.profilePic}
             source={{ uri: data.user.account.photo.url }}
           />
           <Text>{data.description} </Text>
-        </View>
+          {console.log(data.location[0])}
+
+          <MapView
+            // La MapView doit obligatoirement avoir des dimensions
+            style={{ width: "100%", height: 150 }}
+            initialRegion={{
+              latitude: 48.856614,
+              longitude: 2.3522219,
+              latitudeDelta: 0.2,
+              longitudeDelta: 0.2,
+            }}
+            showsUserLocation={true}
+          >
+            {markers.map((marker) => {
+              return (
+                <MapView.Marker
+                  key={marker.id}
+                  coordinate={{
+                    latitude: data.location[1],
+                    longitude: data.location[0],
+                  }}
+                  title={marker.title}
+                  description={marker.description}
+                />
+              );
+            })}
+          </MapView>
+        </ScrollView>
       )}
     </View>
   );
