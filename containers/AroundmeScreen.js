@@ -2,42 +2,54 @@ import { View, Text } from "react-native";
 import React, { useState, useEffect } from "react";
 import * as Location from "expo-location";
 import MapView from "react-native-maps";
+import axios from "axios";
 
 export default function AroundmeScreen() {
   const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [coords, setCoords] = useState();
-
-  const markers = [
-    {
-      //   id: 1,
-      // latitude: data.location[1],
-      // longitude: data.location[0],
-      title: "Le Reacteur",
-      description: "La formation des champion·ne·s !",
-    },
-  ];
+  const [lat, setLat] = useState();
+  const [long, setLong] = useState();
+  const [data, setData] = useState();
+  const [actualLat, setActualLat] = useState();
+  const [actualLong, setActualLong] = useState();
 
   useEffect(() => {
     const askPermission = async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      console.log(status);
-      if (status === "granted") {
-        let location = await Location.getCurrentPositionAsync({});
+      try {
+        const { status } = await Location.requestForegroundPermissionsAsync();
+        console.log(status);
+        if (status === "granted") {
+          const location = await Location.getCurrentPositionAsync();
+          console.log(location);
+          setActualLat(location.coords.latitude);
+          setActualLong(location.coords.longitude);
+          //on a nos vraies coordonnées, on interroge autour de nous
+          //mais comme on fait tourner cela sur un vrai terminal en Isère et qu'il n'y a que des données sur Paris
 
-        const obj = {
-          latitude: location.coords.latitude,
-          longitude: location.coords.longitude,
-        };
-        setCoords(obj);
-      } else {
-        setError(true);
+          setLat(Number(48.866667));
+          setLong(Number(2.333333));
+          console.log(lat, long);
+          response = await axios.get(
+            `https://express-airbnb-api.herokuapp.com/rooms/around?latitude=${lat}&longitude=${long}`
+          );
+        } else {
+          //on fait la requete sans les coordonnées
+          response = await axios.get(
+            "https://express-airbnb-api.herokuapp.com/rooms/around"
+          );
+        }
+        // console.log(response.data);
+
+        setData(response.data);
+
+        setIsLoading(false);
+      } catch (error) {
+        console.log(error.message);
       }
-
-      setIsLoading(false);
     };
     askPermission();
-  }, []);
+  }, [lat, long]);
 
   return (
     <View>
@@ -47,29 +59,27 @@ export default function AroundmeScreen() {
         <Text>Permission refusée</Text>
       ) : (
         <>
-          <Text>Latitude de l'utilisateur : {coords.latitude}</Text>
-          <Text>Longitude de l'utilisateur : {coords.longitude}</Text>
+          <Text>Latitude de l'utilisateur : {actualLat}</Text>
+          <Text>Longitude de l'utilisateur : {actualLong}</Text>
           <MapView
             // La MapView doit obligatoirement avoir des dimensions
             style={{ width: "100%", height: 600 }}
             initialRegion={{
-              latitude: coords.latitude,
-              longitude: coords.longitude,
-              latitudeDelta: 0.07,
-              longitudeDelta: 0.07,
+              latitude: actualLat,
+              longitude: actualLong,
+              latitudeDelta: 0.1,
+              longitudeDelta: 0.1,
             }}
             showsUserLocation={true}
           >
-            {markers.map((marker) => {
+            {data.map((restaurant) => {
               return (
                 <MapView.Marker
-                  key={1}
+                  key={restaurant._id}
                   coordinate={{
-                    latitude: coords.latitude,
-                    longitude: coords.longitude,
+                    latitude: restaurant.location[1],
+                    longitude: restaurant.location[0],
                   }}
-                  title={"truc"}
-                  description={"truc"}
                 />
               );
             })}
