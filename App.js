@@ -130,7 +130,7 @@ export default function App() {
                 <Tab.Screen
                   name="TabMap"
                   options={{
-                    tabBarLabel: "Map",
+                    tabBarLabel: "Around Me",
                     tabBarIcon: ({ color, size }) => (
                       <Ionicons
                         name={"location-outline"}
@@ -157,10 +157,10 @@ export default function App() {
                 <Tab.Screen
                   name="TabSettings"
                   options={{
-                    tabBarLabel: "Settings",
+                    tabBarLabel: "Profile",
                     tabBarIcon: ({ color, size }) => (
                       <Ionicons
-                        name={"options-outline"}
+                        name={"person-outline"}
                         size={size}
                         color={color}
                       />
@@ -175,7 +175,7 @@ export default function App() {
                           title: "Settings",
                         }}
                       >
-                        {() => <SettingsScreen setToken={setToken} />}
+                        {() => <ProfileScreen setToken={setToken} />}
                       </Stack.Screen>
                     </Stack.Navigator>
                   )}

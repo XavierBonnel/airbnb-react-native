@@ -59,7 +59,7 @@ export default function Room({ route, navigation }) {
         <ScrollView>
           <Image source={{ uri: data.photos[0].url }} style={styles.photo} />
           <View style={styles.squarePrice}>
-            <Text style={{ color: "white" }}>{data.price}</Text>
+            <Text style={styles.price}>{data.price} €</Text>
           </View>
           <Text style={styles.title}>{data.title}</Text>
           <Text>{data.ratingValue} stars</Text>
@@ -67,7 +67,7 @@ export default function Room({ route, navigation }) {
             style={styles.profilePic}
             source={{ uri: data.user.account.photo.url }}
           />
-          <Text>{data.description} </Text>
+          <Text style={styles.description}>{data.description} </Text>
           {console.log(data.location[0])}
 
           <MapView

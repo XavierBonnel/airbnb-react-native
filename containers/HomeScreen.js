@@ -39,7 +39,7 @@ export default function HomeScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={{ marginTop: 24 }}>
-      {/* <Button
+        {/* <Button
           title="Go to Profile"
           onPress={() => {
             navigation.navigate("Profile", { userId: 123 });
@@ -63,7 +63,7 @@ export default function HomeScreen() {
                     }}
                   >
                     <View style={styles.squarePrice}>
-                      <Text style={{ color: "white" }}>{obj.item.price}</Text>
+                      <Text style={styles.price}>{obj.item.price} €</Text>
                     </View>
                     <Image
                       source={{ uri: obj.item.photos[0].url }}
@@ -89,9 +89,8 @@ export default function HomeScreen() {
                           source={{ uri: obj.item.user.account.photo.url }}
                         />
                       </View>
-
-                      <View style={styles.separator} />
                     </View>
+                    <View style={styles.separator} />
                   </TouchableOpacity>
                 </View>
               );

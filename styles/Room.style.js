@@ -12,7 +12,14 @@ export default StyleSheet.create({
     width: 80,
     height: 40,
     zIndex: 456,
-    bottom: 230,
+    bottom: 430,
+  },
+
+  price: {
+    color: "white",
+    marginTop: 6,
+    marginLeft: 8,
+    fontSize: 18,
   },
 
   title: {
@@ -26,5 +33,10 @@ export default StyleSheet.create({
     width: 64,
     height: 64,
     borderRadius: 50,
+    marginTop: 16,
+  },
+
+  description: {
+    marginVertical: 16,
   },
 });

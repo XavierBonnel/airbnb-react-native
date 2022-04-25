@@ -13,7 +13,7 @@ export default StyleSheet.create({
   },
 
   roomCard: {
-    marginVertical: 16,
+    // marginVertical: 16,
   },
 
   squarePrice: {
@@ -22,7 +22,14 @@ export default StyleSheet.create({
     width: 80,
     height: 40,
     zIndex: 456,
-    bottom: 125,
+    bottom: 150,
+  },
+
+  price: {
+    color: "white",
+    marginTop: 6,
+    marginLeft: 8,
+    fontSize: 18,
   },
 
   photo: {
@@ -50,6 +57,7 @@ export default StyleSheet.create({
     width: 64,
     height: 64,
     borderRadius: 50,
+    marginTop: 8,
   },
 
   reviews: {
@@ -59,6 +67,6 @@ export default StyleSheet.create({
   separator: {
     borderBottomColor: "gray",
     borderBottomWidth: 0.5,
-    marginVertical: 8,
+    marginVertical: 32,
   },
 });
