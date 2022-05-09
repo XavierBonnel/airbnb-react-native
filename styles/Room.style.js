@@ -12,7 +12,7 @@ export default StyleSheet.create({
     width: 80,
     height: 40,
     zIndex: 456,
-    bottom: 430,
+    bottom: 480,
   },
 
   price: {
@@ -34,9 +34,22 @@ export default StyleSheet.create({
     height: 64,
     borderRadius: 50,
     marginTop: 16,
+    alignSelf: "flex-end",
+  },
+
+  ratingAndProfile: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
 
   description: {
     marginVertical: 16,
+  },
+
+  textsAndAvatar: {
+    display: "flex",
+    marginHorizontal: 16,
   },
 });

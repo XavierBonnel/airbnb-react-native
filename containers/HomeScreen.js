@@ -59,7 +59,6 @@ export default function HomeScreen() {
                       navigation.navigate("Room", {
                         roomId: obj.item._id,
                       });
-                      console.log(obj.item._id);
                     }}
                   >
                     <View style={styles.squarePrice}>

@@ -31,7 +31,6 @@ export default function Room({ route, navigation }) {
         );
 
         setData(response.data);
-        console.log(response.data);
         setIsLoading(false);
       } catch (error) {
         console.log(error.message);
@@ -61,14 +60,20 @@ export default function Room({ route, navigation }) {
           <View style={styles.squarePrice}>
             <Text style={styles.price}>{data.price} €</Text>
           </View>
-          <Text style={styles.title}>{data.title}</Text>
-          <Text>{data.ratingValue} stars</Text>
-          <Image
-            style={styles.profilePic}
-            source={{ uri: data.user.account.photo.url }}
-          />
-          <Text style={styles.description}>{data.description} </Text>
-          {console.log(data.location[0])}
+
+          <View style={styles.textsAndAvatar}>
+            <Text style={styles.title}>{data.title}</Text>
+
+            <View style={styles.ratingAndProfile}>
+              <Text>{data.ratingValue} stars</Text>
+              <Image
+                style={styles.profilePic}
+                source={{ uri: data.user.account.photo.url }}
+              />
+            </View>
+
+            <Text style={styles.description}>{data.description} </Text>
+          </View>
 
           <MapView
             // La MapView doit obligatoirement avoir des dimensions

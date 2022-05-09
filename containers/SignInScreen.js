@@ -43,15 +43,12 @@ export default function SignInScreen({ userToken, setUserToken, setToken }) {
             }
           );
           setIsLoading(false);
-          console.log(response.data.token);
           alert("you're connected");
           setToken(response.data.token);
         } catch (error) {
           console.log(error.message);
           setErrorMessage(error.message);
         }
-
-        console.log("it's working");
       } else {
         setErrorMessage("please fill all the inputs");
       }

@@ -54,7 +54,6 @@ export default function SignInScreen({ setToken }) {
 
             setIsLoading(false);
 
-            console.log(response.data);
             alert("account created");
             setToken(response.data.token);
           } catch (error) {
@@ -65,7 +64,6 @@ export default function SignInScreen({ setToken }) {
         }
         // const userToken = "secret-token";
         // setToken(userToken);
-        console.log("it's working");
       } else {
         setErrorMessage("please fill all the inputs");
       }
@@ -89,7 +87,6 @@ export default function SignInScreen({ setToken }) {
             onChangeText={(newUsername) => setUsername(newUsername)}
             value={username}
           />
-          {console.log(email)}
 
           <View style={styles.descriptionView}>
             <TextInput

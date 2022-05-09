@@ -96,7 +96,7 @@ export default function App() {
                           headerShown: false,
 
                           title: "My App",
-                          headerStyle: { backgroundColor: "red" },
+                          headerStyle: { backgroundColor: "#FF385C" },
                           headerTitleStyle: { color: "white" },
                         }}
                       >
@@ -107,8 +107,20 @@ export default function App() {
                         name="Room"
                         options={{
                           title: "Selected Room",
-                          headerStyle: { backgroundColor: "red" },
-                          headerTitleStyle: { color: "white" },
+                          // headerShown: false,
+
+                          headerStyle: {
+                            backgroundColor: "white",
+                            display: "flex",
+                            alignItems: "center",
+                          },
+                          headerTitleStyle: {
+                            display: "flex",
+
+                            color: "#FF385C",
+                            fontWeight: "600",
+                            fontSize: 22,
+                          },
                         }}
                       >
                         {(props) => <Room {...props} />}
