@@ -50,6 +50,7 @@ export default function HomeScreen() {
           <ActivityIndicator size="large" color="#FF385C" />
         ) : (
           <FlatList
+            contentContainerStyle={{ paddingBottom: 60 }}
             data={data}
             renderItem={(obj) => {
               return (

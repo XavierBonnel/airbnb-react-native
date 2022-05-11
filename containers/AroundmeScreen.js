@@ -1,8 +1,10 @@
-import { View, Text } from "react-native";
+import { View, Text, ActivityIndicator, StyleSheet } from "react-native";
 import React, { useState, useEffect } from "react";
 import * as Location from "expo-location";
 import MapView from "react-native-maps";
 import axios from "axios";
+
+import styles from "../styles/AroundMe.style";
 
 export default function AroundmeScreen() {
   const [error, setError] = useState();
@@ -54,13 +56,11 @@ export default function AroundmeScreen() {
   return (
     <View>
       {isLoading ? (
-        <Text>Chargement...</Text>
+        <ActivityIndicator size="large" color="#FF385C" />
       ) : error ? (
         <Text>Permission refusée</Text>
       ) : (
         <>
-          <Text>Latitude de l'utilisateur : {actualLat}</Text>
-          <Text>Longitude de l'utilisateur : {actualLong}</Text>
           <MapView
             // La MapView doit obligatoirement avoir des dimensions
             style={{ width: "100%", height: 600 }}

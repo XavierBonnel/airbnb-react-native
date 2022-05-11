@@ -106,20 +106,20 @@ export default function App() {
                       <Stack.Screen
                         name="Room"
                         options={{
+                          headerTitleAlign: "center",
+
                           title: "Selected Room",
                           // headerShown: false,
 
                           headerStyle: {
                             backgroundColor: "white",
-                            display: "flex",
-                            alignItems: "center",
                           },
                           headerTitleStyle: {
                             display: "flex",
 
                             color: "#FF385C",
-                            fontWeight: "600",
-                            fontSize: 22,
+                            // fontWeight: "300",
+                            fontSize: 18,
                           },
                         }}
                       >
@@ -158,6 +158,19 @@ export default function App() {
                         name="Around me"
                         options={{
                           title: "Around me",
+
+                          headerTitleAlign: "center",
+
+                          headerStyle: {
+                            backgroundColor: "white",
+                          },
+                          headerTitleStyle: {
+                            display: "flex",
+
+                            color: "#FF385C",
+                            // fontWeight: "300",
+                            fontSize: 18,
+                          },
                         }}
                       >
                         {() => <AroundmeScreen setToken={setToken} />}
@@ -183,11 +196,28 @@ export default function App() {
                     <Stack.Navigator>
                       <Stack.Screen
                         name="Settings"
+                        //ne fonctionne pas ci-dessous pour passer setToken à ProfileScreen
+                        // component={ProfileScreen}
+                        // initialParams={{ setToken: setToken }}
                         options={{
-                          title: "Settings",
+                          title: "Profile",
+                          headerTitleAlign: "center",
+
+                          headerStyle: {
+                            backgroundColor: "white",
+                          },
+                          headerTitleStyle: {
+                            display: "flex",
+
+                            color: "#FF385C",
+                            // fontWeight: "300",
+                            fontSize: 18,
+                          },
                         }}
                       >
-                        {() => <ProfileScreen setToken={setToken} />}
+                        {/* méthode ci-dessous ne foncionne pas */}
+
+                        {(props) => <ProfileScreen setToken={setToken} />}
                       </Stack.Screen>
                     </Stack.Navigator>
                   )}

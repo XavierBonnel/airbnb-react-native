@@ -6,7 +6,7 @@ export default function SettingsScreen({ setToken }) {
       <Text>Hello Settings</Text>
 
       <Button
-        title="Log Out"
+        title="Log ut"
         onPress={() => {
           setToken(null);
         }}

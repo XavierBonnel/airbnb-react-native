@@ -56,9 +56,11 @@ export default function Room({ route, navigation }) {
         <ActivityIndicator size="large" color="#FF385C" />
       ) : (
         <ScrollView>
-          <Image source={{ uri: data.photos[0].url }} style={styles.photo} />
-          <View style={styles.squarePrice}>
-            <Text style={styles.price}>{data.price} €</Text>
+          <View style={styles.photoAndPrice}>
+            <Image source={{ uri: data.photos[0].url }} style={styles.photo} />
+            <View style={styles.squarePrice}>
+              <Text style={styles.price}>{data.price} €</Text>
+            </View>
           </View>
 
           <View style={styles.textsAndAvatar}>
