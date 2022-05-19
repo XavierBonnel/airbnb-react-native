@@ -5,7 +5,9 @@ import { useEffect, useState } from "react";
 
 import styles from "../styles/ProfileScreen.style";
 
-export default function ProfileScreen({ route, navigation }) {
+export default function ProfileScreen({ route, setUserToken, userToken }) {
+    const navigation = useNavigation();
+
   const { params } = useRoute();
   return (
     <View style={styles.profileScreen}>
@@ -13,9 +15,10 @@ export default function ProfileScreen({ route, navigation }) {
       <Text>user id : {params.userId}</Text> */}
       <Pressable
         style={styles.logOutButton}
-        onPress={(e) => {
+        onPress={() => {
           //méthode ci dessous ne fonctionne pas
-          setToken(false);
+          setUserToken(null);
+          // navigation.navigate("SignIn");
         }}
       >
         <Text style={styles.textLogOut}>Log Out</Text>

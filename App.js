@@ -173,7 +173,12 @@ export default function App() {
                           },
                         }}
                       >
-                        {() => <AroundmeScreen setToken={setToken} />}
+                        {() => (
+                          <AroundmeScreen
+                            userToken={userToken}
+                            setToken={setToken}
+                          />
+                        )}
                       </Stack.Screen>
                     </Stack.Navigator>
                   )}
@@ -216,8 +221,13 @@ export default function App() {
                         }}
                       >
                         {/* méthode ci-dessous ne foncionne pas */}
-
-                        {(props) => <ProfileScreen setToken={setToken} />}
+                        {() => (
+                          <ProfileScreen
+                            setToken={setToken}
+                            setUserToken={setUserToken}
+                            userToken={userToken}
+                          />
+                        )}
                       </Stack.Screen>
                     </Stack.Navigator>
                   )}
