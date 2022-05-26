@@ -1,12 +1,16 @@
 import { View, Text, ActivityIndicator, StyleSheet } from "react-native";
+import { useNavigation } from "@react-navigation/core";
+
 import React, { useState, useEffect } from "react";
 import * as Location from "expo-location";
-import MapView from "react-native-maps";
+import MapView, { Marker, Callout } from "react-native-maps";
 import axios from "axios";
 
 import styles from "../styles/AroundMe.style";
 
 export default function AroundmeScreen({ userToken }) {
+  const navigation = useNavigation();
+
   const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [coords, setCoords] = useState();
@@ -77,11 +81,21 @@ export default function AroundmeScreen({ userToken }) {
               return (
                 <MapView.Marker
                   key={restaurant._id}
+                  title={restaurant.title}
+                  // description={restaurant.price}
                   coordinate={{
                     latitude: restaurant.location[1],
                     longitude: restaurant.location[0],
                   }}
-                />
+                >
+                  <Callout
+                    onPress={() => {
+                      navigation.navigate("Room", {
+                        roomId: restaurant._id,
+                      });
+                    }}
+                  ></Callout>
+                </MapView.Marker>
               );
             })}
           </MapView>
