@@ -12,6 +12,7 @@ import {
   SafeAreaView,
 } from "react-native";
 import axios from "axios";
+import Star from "react-native-star-view";
 
 import styles from "../styles/HomeScreen.style";
 
@@ -19,6 +20,12 @@ export default function HomeScreen() {
   const navigation = useNavigation();
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState({});
+
+  const starStyle = {
+    width: 150,
+    height: 30,
+    marginBottom: 20,
+  };
 
   useEffect(() => {
     const fetchdata = async () => {
@@ -79,7 +86,11 @@ export default function HomeScreen() {
                           >
                             {obj.item.title}
                           </Text>
-                          <Text>{obj.item.ratingValue} stars</Text>
+                          <Star
+                            score={obj.item.ratingValue}
+                            style={starStyle}
+                          />
+
                           <Text style={styles.reviews}>
                             {obj.item.reviews} reviews
                           </Text>

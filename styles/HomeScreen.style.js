@@ -22,7 +22,7 @@ export default StyleSheet.create({
     width: 80,
     height: 40,
     zIndex: 456,
-    bottom: 150,
+    bottom: 180,
   },
 
   price: {

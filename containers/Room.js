@@ -14,12 +14,19 @@ import {
   ScrollView,
 } from "react-native";
 import axios from "axios";
+import Star from "react-native-star-view";
 
 import styles from "../styles/Room.style";
 
 export default function Room({ route, navigation }) {
   const [data, setData] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+
+  const starStyle = {
+    width: 150,
+    height: 30,
+    marginBottom: 20,
+  };
 
   const { roomId } = route.params;
 
@@ -67,7 +74,8 @@ export default function Room({ route, navigation }) {
             <Text style={styles.title}>{data.title}</Text>
 
             <View style={styles.ratingAndProfile}>
-              <Text>{data.ratingValue} stars</Text>
+              <Star score={data.ratingValue} style={starStyle} />
+              {/* <Text>{data.ratingValue} stars</Text> */}
               <Image
                 style={styles.profilePic}
                 source={{ uri: data.user.account.photo.url }}

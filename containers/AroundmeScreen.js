@@ -6,7 +6,7 @@ import axios from "axios";
 
 import styles from "../styles/AroundMe.style";
 
-export default function AroundmeScreen({userToken}) {
+export default function AroundmeScreen({ userToken }) {
   const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [coords, setCoords] = useState();
@@ -55,7 +55,7 @@ export default function AroundmeScreen({userToken}) {
 
   return (
     <View>
-      <Text>{userToken}</Text>
+      {/* <Text>{userToken}</Text> */}
       {isLoading ? (
         <ActivityIndicator size="large" color="#FF385C" />
       ) : error ? (
