@@ -1,4 +1,4 @@
-import { View, Text, ActivityIndicator, StyleSheet } from "react-native";
+import { View, Text, ActivityIndicator, StyleSheet, Image } from "react-native";
 import { useNavigation } from "@react-navigation/core";
 
 import React, { useState, useEffect } from "react";
@@ -70,31 +70,44 @@ export default function AroundmeScreen({ userToken }) {
             // La MapView doit obligatoirement avoir des dimensions
             style={{ width: "100%", height: 600 }}
             initialRegion={{
-              latitude: actualLat,
-              longitude: actualLong,
+              //actualLat
+              //actualLong
+
+              //fake coordinates to get the locations of rentals
+              latitude: 48.864716,
+              longitude: 2.349014,
               latitudeDelta: 0.1,
               longitudeDelta: 0.1,
             }}
             showsUserLocation={true}
           >
-            {data.map((restaurant) => {
+            {data.map((restaurant, index) => {
               return (
                 <MapView.Marker
                   key={restaurant._id}
-                  title={restaurant.title}
-                  // description={restaurant.price}
                   coordinate={{
                     latitude: restaurant.location[1],
                     longitude: restaurant.location[0],
                   }}
                 >
                   <Callout
+                    tolltip={true}
                     onPress={() => {
                       navigation.navigate("Room", {
                         roomId: restaurant._id,
                       });
                     }}
-                  ></Callout>
+                  >
+                    <View>
+                      <Image
+                        source={{ uri: restaurant.photos[0].url }}
+                        style={styles.image}
+                      />
+
+                      <Text style={styles.text}> {restaurant.title}</Text>
+                      <Text style={styles.text}> {restaurant.price} €</Text>
+                    </View>
+                  </Callout>
                 </MapView.Marker>
               );
             })}
